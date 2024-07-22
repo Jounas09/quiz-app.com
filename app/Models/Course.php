@@ -15,4 +15,12 @@ class Course extends Model
         'name',
         'description'
     ];
+
+
+    public function courseUsers()
+    {
+        return $this->hasMany(CourseUser::class, 'id_Course');
+    }
+
+
 }
