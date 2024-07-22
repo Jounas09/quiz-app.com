@@ -23,4 +23,18 @@ class Planification extends Model
     const TYPE_TEST = 'test';
     const TYPE_CLASS = 'class';
 
+     /**
+     * Obtener todos los tipos de planificación posibles.
+     *
+     * @return array
+     */
+    public static function getTypes()
+    {
+        return [
+            self::TYPE_TASK,
+            self::TYPE_TEST,
+            self::TYPE_CLASS,
+        ];
+    }
+
 }

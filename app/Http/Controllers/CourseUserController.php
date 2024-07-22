@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Course;
 use App\Models\CourseUser;
+use Illuminate\Http\Request;
+use App\Models\Planification;
 use Illuminate\Support\Facades\Auth;
 
 class CourseUserController extends Controller
@@ -44,6 +45,12 @@ class CourseUserController extends Controller
 
             return redirect()->back()->with('success', 'Te has matriculado en el curso exitosamente.');
         }
+    }
+
+    public function details(Course $course){
+        //dd($course);
+        $types = Planification::getTypes();
+        return view('vendor.voyager.planifications.create',compact('course','types'));
     }
 
 
