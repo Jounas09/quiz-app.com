@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CourseUserController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -20,4 +21,17 @@ Route::get('/', function () {
 
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
+
+    /**
+     * Matriculacion
+     */
+    Route::get('/index-matriculation', [CourseUserController::class, 'Index'])
+    ->name('courses-user.index');
+
+    Route::post('/create-matriculation/{course}', [CourseUserController::class, 'Matriculation'])
+    ->name('courses-user.matriculation');
+
+
+    //------------------------------------------------------------------------
+
 });
