@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Constants\English;
 use App\Models\Course;
 use App\Models\CourseUser;
 use Illuminate\Http\Request;
@@ -9,8 +10,10 @@ use App\Models\Planification;
 use App\Models\PlanificationCourse;
 use Illuminate\Support\Facades\Auth;
 
+
 class PlanificationController extends Controller
 {
+
     /**
      * Display a listing of the resource.
      *
@@ -27,13 +30,13 @@ class PlanificationController extends Controller
 
         // Verificar si hay cursos
         if ($courses->isNotEmpty()) {
-            return view('vendor.voyager.planifications.browse', compact('courses','user'));
+            return view('vendor.voyager.planifications.browse', compact('courses', 'user'));
         } else {
             // Pasar el mensaje de error a la vista
             return view('vendor.voyager.planifications.browse', [
                 'courses' => collect(), // Asegúrate de pasar una colección vacía para evitar errores
                 'error' => 'No estás matriculado en ningún curso',
-                'user'=>'user'
+                'user' => 'user'
             ]);
         }
     }
@@ -90,17 +93,13 @@ class PlanificationController extends Controller
      * Mostrar la planificacion de un curso
      */
 
-     public function details(Course $course)
-     {
-         $planifications = PlanificationCourse::where('id_Course', $course->id)->with('planification')->get();
-
-         // Agrupar las planificaciones por tipo
-         $planificationsByType = $planifications->groupBy(function($planificationCourse) {
-             return $planificationCourse->planification->type;
-         });
-
-         return view('vendor.voyager.planifications.read', compact('planificationsByType', 'course'));
-     }
+    public function details(Course $course)
+    {
+        $user = Auth::user();
+        $planifications = PlanificationCourse::where('id_Course', $course->id)->get();
+        //dd($planifications);
+        return view('vendor.voyager.planifications.read', compact('planifications', 'course', 'user'));
+    }
 
 
 
@@ -121,9 +120,15 @@ class PlanificationController extends Controller
      * @param  \App\Models\Planification  $planification
      * @return \Illuminate\Http\Response
      */
-    public function edit(Planification $planification)
+    public function edit($id)
     {
-        //
+        $planification = Planification::findOrFail($id);
+        $types = ['test', 'task', 'class'];
+
+        // Convierte la fecha en formato `Y-m-d` para la vista
+        $planification->date = \Carbon\Carbon::parse($planification->date)->format('Y-m-d');
+
+        return view('vendor.voyager.planifications.update', compact('planification', 'types'));
     }
 
     /**
@@ -133,9 +138,28 @@ class PlanificationController extends Controller
      * @param  \App\Models\Planification  $planification
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Planification $planification)
+    public function update(Request $request, $id)
     {
-        //
+        // Validar los datos de entrada
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'type' => 'required|string',
+            'date' => 'required|date|after_or_equal:today',
+        ]);
+
+        // Buscar la planificación
+        $planification = Planification::findOrFail($id);
+
+        // Actualizar la planificación
+        $planification->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'type' => $request->type,
+            'date' => $request->date,
+        ]);
+
+        return redirect()->route('planification.index')->with('success', 'Planificación actualizada exitosamente.');
     }
 
     /**

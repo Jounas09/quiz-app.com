@@ -51,6 +51,11 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/show-planification/{course}', [PlanificationController::class, 'details'])
     ->name('planification.details');
 
+    // web.php (o el archivo de rutas correspondiente)
+    Route::get('/planification/{id}/edit', [PlanificationController::class, 'edit'])->name('planification.edit');
+    Route::post('/planification/{id}/update', [PlanificationController::class, 'update'])->name('planification.update');
+
+
 
 
     //------------------------------------------------------------------------
