@@ -21,7 +21,7 @@ class CreatePlanificationCoursesTable extends Migration
 
             // Adding foreign keys
             $table->foreign('id_Course')->references('id')->on('courses')->onDelete('cascade');
-            $table->foreign('id_User')->references('id')->on('planifications')->onDelete('cascade');
+            $table->foreign('id_Planification')->references('id')->on('planifications')->onDelete('cascade');
         });
     }
 
