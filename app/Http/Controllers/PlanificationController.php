@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
-use App\Constants\English;
+use App\Models\User;
 use App\Models\Course;
+use App\Constants\English;
 use App\Models\CourseUser;
 use Illuminate\Http\Request;
 use App\Models\Planification;
@@ -23,11 +24,10 @@ class PlanificationController extends Controller
     {
         $user = Auth::user();
 
-        // Obtener todos los cursos relacionados con el usuario
-        $courses = $user->courseUsers->map(function ($courseUser) {
-            return $courseUser->course;
-        });
+        $courses = $user->courses;
 
+
+        //dd($courses);
         // Verificar si hay cursos
         if ($courses->isNotEmpty()) {
             return view('vendor.voyager.planifications.browse', compact('courses', 'user'));
@@ -39,6 +39,7 @@ class PlanificationController extends Controller
                 'user' => 'user'
             ]);
         }
+
     }
 
 
@@ -161,6 +162,38 @@ class PlanificationController extends Controller
 
         return redirect()->route('planification.index')->with('success', 'Planificación actualizada exitosamente.');
     }
+
+    /**
+     * Configurate specific planification
+     */
+
+    public function configurate(Request $request, Planification $planification)
+    {
+
+        dd($planification);
+    }
+
+    public function getPlansByCourse(Request $request)
+    {
+        $courseId = $request->query('course_id');
+
+        $plans = PlanificationCourse::where('id_Course', $courseId)
+            ->whereHas('planification', function ($query) {
+                $query->where('type', Planification::TYPE_TEST);
+            })
+            ->with('planification')
+            ->get()
+            ->map(function ($planificationCourse) {
+                return $planificationCourse->planification;
+            });
+
+            //($plans);
+
+        return response()->json($plans);
+    }
+
+
+
 
     /**
      * Remove the specified resource from storage.
