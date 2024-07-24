@@ -11,8 +11,21 @@ class Course extends Model
     protected $table = 'courses';
 
     protected $fillable = [
-        'id_company',
+        'id',
         'name',
-        'description'];
-    
+        'description'
+    ];
+
+
+    public function banks()
+    {
+        return $this->hasMany(Banks::class);
+    }
+
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'course_user', 'id_Course', 'id_User');
+    }
+
 }
