@@ -21,6 +21,9 @@ class English
      */
     const Planification_text = 'Plans';
     const Planification_text_default = 'No schedules available.';
+    const Planification_delete_modal_title = 'Do you want to delete';
+    const Planification_delete_modal_error = 'Your planification have a question bank or info asociated';
+    const Planification_delete_modal_success = 'Planification deleted';
 
 
     /**

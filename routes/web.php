@@ -52,9 +52,9 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/show-planification/{course}', [PlanificationController::class, 'details'])
     ->name('planification.details');
 
-    // web.php (o el archivo de rutas correspondiente)
     Route::get('/planification/{id}/edit', [PlanificationController::class, 'edit'])
     ->name('planification.edit');
+
     Route::post('/planification/{id}/update', [PlanificationController::class, 'update'])
     ->name('planification.update');
 
@@ -62,6 +62,9 @@ Route::group(['prefix' => 'admin'], function () {
     ->name('planification.configurate');
 
     Route::get('/plans', [PlanificationController::class, 'getPlansByCourse']);
+
+    Route::delete('/delete-planification/{planification}', [PlanificationController::class, 'destroy'])
+    ->name('planification.delete');
 
     //------------------------------------------------------------------------
 

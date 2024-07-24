@@ -41,7 +41,7 @@ class Planification extends Model
 
     public function bank()
     {
-        return $this->hasOne(Banks::class);
+        return $this->hasOne(Banks::class,'id_Planification');
     }
 
 }
