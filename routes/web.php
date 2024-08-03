@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\BanksController;
-use App\Http\Controllers\CourseUserController;
-use App\Http\Controllers\PlanificationController;
 use App\Models\Course;
 use App\Models\Planification;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TestController;
+use App\Http\Controllers\BanksController;
+use App\Http\Controllers\CourseUserController;
+use App\Http\Controllers\PlanificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -58,7 +59,7 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/planification/{id}/update', [PlanificationController::class, 'update'])
     ->name('planification.update');
 
-    Route::post('/configurate-planification/{planification}', [PlanificationController::class, 'configurate'])
+    Route::get('/configurate-planification/{planification}', [PlanificationController::class, 'configurate'])
     ->name('planification.configurate');
 
     Route::get('/plans', [PlanificationController::class, 'getPlansByCourse']);
@@ -81,5 +82,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::post('/save-bank', [BanksController::class, 'update'])->name('bank.update');
     Route::delete('/delete-bank/{banks}', [BanksController::class, 'destroy'])->name('bank.delete');
 
-
+    /**
+     * Test
+     */
+    Route::post('save-test', [TestController::class, 'store'])->name('store.test');
 });
