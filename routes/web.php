@@ -76,4 +76,10 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/partials/{type}', [BanksController::class, 'loadPartialView']);
     Route::post('/receive-json', [BanksController::class, 'receiveJson'])->name('receive-json');
 
+    // web.php (para peticiones a través de un navegador)
+    Route::get('/edit-bank/{banks}', [BanksController::class, 'edit'])->name('bank.edit');
+    Route::post('/save-bank', [BanksController::class, 'update'])->name('bank.update');
+    Route::delete('/delete-bank/{banks}', [BanksController::class, 'destroy'])->name('bank.delete');
+
+
 });
