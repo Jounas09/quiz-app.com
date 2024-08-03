@@ -146,13 +146,8 @@ class PlanificationController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // Validar los datos de entrada
-        $request->validate([
-            'name' => 'required|string|max:255',
-            'description' => 'required|string',
-            'type' => 'required|string',
-            'date' => 'required|date|after_or_equal:today',
-        ]);
+
+        //dd($request);
 
         // Buscar la planificación
         $planification = Planification::findOrFail($id);
