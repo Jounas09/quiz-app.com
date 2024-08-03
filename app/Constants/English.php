@@ -2,6 +2,8 @@
 
 namespace App\Constants;
 
+use App\Models\Planification;
+
 class English
 {
     /**
@@ -15,6 +17,14 @@ class English
     const Save_text = 'Save';
     const Add_text = 'Add';
     const Select_text = 'Select an option';
+    const Actions_text = 'Actions';
+    const Show_questions_text = 'Show Questions';
+
+    /**
+     * Courses
+     */
+
+     const Course_text = 'Course';
 
     /**
      * Planifications
@@ -47,6 +57,7 @@ class English
     const Enter_answer_text= 'Enter an answer';
     const Correct_answer_text = 'Select the correct answer';
     const Select_course_text = 'Select the course';
+
 
     /**
      * Partials
