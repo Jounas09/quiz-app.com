@@ -29,7 +29,7 @@ Route::group(['prefix' => 'admin'], function () {
     /**
      * Matriculacion
      */
-    Route::get('/index-matriculation', [CourseUserController::class, 'Index'])
+    Route::get('/matriculation', [CourseUserController::class, 'Index'])
     ->name('courses-user.index');
 
     Route::post('/create-matriculation/{course}', [CourseUserController::class, 'Matriculation'])
@@ -43,7 +43,7 @@ Route::group(['prefix' => 'admin'], function () {
         /**
      * Planificación
      */
-    Route::get('/index-planification', [PlanificationController::class, 'index'])
+    Route::get('/planification', [PlanificationController::class, 'index'])
     ->name('planification.index');
 
     Route::post('/create-planification', [PlanificationController::class, 'store'])
