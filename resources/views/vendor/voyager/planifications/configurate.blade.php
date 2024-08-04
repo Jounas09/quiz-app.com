@@ -27,7 +27,7 @@ use App\Constants\English;
     </div>
     @endif
 
-    <h1>{{ English::Configurate_text }} {{ English::Test_title_text }} {{  $planification->name }}</h1>
+    <h1>{{ English::Configuration_text }} {{ English::Test_title_text }} {{  $planification->name }}</h1>
 
     <div class="card">
         <div class="card-body">
