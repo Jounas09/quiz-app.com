@@ -19,7 +19,7 @@ class English
     const Select_text = 'Select an option';
     const Actions_text = 'Actions';
     const Show_questions_text = 'Show Questions';
-    const Configurate_text = 'Configurate';
+    const Cancel_text = 'Cancel';
 
     /**
      * Courses
@@ -74,5 +74,8 @@ class English
     const Duration_test = 'Enter the duration of the test';
     const Total_questions_text = 'Total number of questions of:';
     const Test_empty_text = 'No associated test found for this bank.';
+    const Test_info_text = 'Test Info';
+    const Test_questions_info_text = 'Questions number';
+    const Test_duration_info_text = 'Duration';
 
 }

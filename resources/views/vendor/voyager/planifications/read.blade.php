@@ -17,31 +17,6 @@
                 @foreach ($planifications as $plan)
                     <div class="card mb-4">
                         <div class="card-body">
-                            <h5 class="card-title">{{ $plan }}</h5>
-                            <p class="card-text">{{ $plan->type }}</p>
-                            <p class="card-text">{{ $plan->description }}</p>
-                            <p class="card-text">
-                                <small class="text-muted">{{ $plan->date }}</small>
-                            </p>
-                        </div>
-                        <div class="card-footer d-flex justify-content-between">
-                            <a href="{{ route('planification.configurate', ['planification' => $plan->id]) }}"
-                                class="btn btn-primary">{{ English::Configuration_text }}</a>
-                            <a href="{{ route('planification.edit', ['id' => $plan->id]) }}"
-                                class="btn btn-warning">{{ English::Update_text }}</a>
-                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#myModal"
-                                data-id="{{ $plan->id }}" data-name="{{ $plan->name }}" data-type="{{ $plan->type }}"
-                                data-description="{{ $plan->description }}">
-                                {{ English::Delete_text }}</a>
-                        </div>
-                    </div>
-                @endforeach
-            @break
-
-            @case('admin')
-                @foreach ($planifications as $plan)
-                    <div class="card mb-4">
-                        <div class="card-body">
                             <h5 class="card-title">{{ $plan->name }}</h5>
                             <p class="card-text">{{ $plan->type }}</p>
                             <p class="card-text">{{ $plan->description }}</p>
@@ -52,65 +27,126 @@
                             @if ($plan->hasTest)
                                 @foreach ($plan->bank->tests as $test)
                                     <div>
-                                        <p><strong>Test Configuration</strong></p>
-                                        <p><strong>Number of Questions:</strong> {{ $test->question_number }}</p>
-                                        <p><strong>Duration:</strong> {{ $test->duration_in_minutes }} minutes</p>
+                                        <p><strong>{{ English::Test_info_text }}</strong></p>
+                                        <p><strong>{{ English::Test_questions_info_text }}</strong> {{ $test->question_number }}</p>
+                                        <p><strong>{{ English::Test_duration_info_text }}:</strong>
+                                            {{ $test->duration_in_minutes }}
+                                            minutes</p>
                                     </div>
                                 @endforeach
 
+
                                 <a href="{{ route('planification.edit', ['id' => $plan->id]) }}"
-                                    class="btn btn-warning">{{ English::Update_text }}</a>
+                                    class="btn btn-warning">{{ English::Update_text }} {{ English::Planification_text }}</a>
                                 <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#myModal"
                                     data-id="{{ $plan->id }}" data-name="{{ $plan->name }}" data-type="{{ $plan->type }}"
                                     data-description="{{ $plan->description }}">
-                                    {{ English::Delete_text }}</a>
-                            </div>
-
-                            @else
-                                <p>{{ English::Test_empty_text }}</p>
-                                <div class="card-footer d-flex justify-content-between">
-                                    <a href="{{ route('planification.configurate', ['planification' => $plan->id]) }}"
-                                        class="btn btn-primary">{{ English::Configuration_text }}</a>
-                                        <a href="{{ route('planification.edit', ['id' => $plan->id]) }}"
-                                            class="btn btn-warning">{{ English::Update_text }}</a>
-                                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#myModal"
-                                            data-id="{{ $plan->id }}" data-name="{{ $plan->name }}" data-type="{{ $plan->type }}"
-                                            data-description="{{ $plan->description }}">
-                                            {{ English::Delete_text }}</a>
-                            @endif
-
+                                    {{ English::Delete_text }} {{ English::Planification_text }}</a>
                         </div>
-
-
-
-
-                    </div>
-                @endforeach
-            @break
-
-            @case('alumno')
-                @foreach ($planifications as $plan)
-                    <div class="card mb-4">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ $plan->planification->name }}</h5>
-                            <p class="card-text">{{ $plan->planification->type }}</p>
-                            <p class="card-text">{{ $plan->planification->description }}</p>
-                            <p class="card-text">
-                                <small class="text-muted">{{ $plan->planification->date }}</small>
-                            </p>
-                        </div>
+                    @else
+                        <p>{{ English::Test_empty_text }}</p>
                         <div class="card-footer d-flex justify-content-between">
-                            <a href="#" class="btn btn-warning">{{ English::Take_text }}</a>
-                        </div>
+                            <a href="{{ route('planification.configurate', ['planification' => $plan->id]) }}"
+                                class="btn btn-primary">{{ English::Configuration_text }} {{ English::Planification_text }}</a>
+                            <a href="{{ route('planification.edit', ['id' => $plan->id]) }}"
+                                class="btn btn-warning">{{ English::Update_text }} {{ English::Planification_text }}</a>
+                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#myModal"
+                                data-id="{{ $plan->id }}" data-name="{{ $plan->name }}" data-type="{{ $plan->type }}"
+                                data-description="{{ $plan->description }}">
+                                {{ English::Delete_text }} {{ English::Planification_text }}</a>
+                @endif
+            </div>
+            </div>
+            @endforeach
+        @break
+
+        @case('admin')
+            @foreach ($planifications as $plan)
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $plan->name }}</h5>
+                        <p class="card-text">{{ $plan->type }}</p>
+                        <p class="card-text">{{ $plan->description }}</p>
+                        <p class="card-text">
+                            <small class="text-muted">{{ $plan->date }}</small>
+                        </p>
+
+                        @if ($plan->hasTest)
+                            @foreach ($plan->bank->tests as $test)
+                                <div>
+                                    <p><strong>{{ English::Test_info_text }}</strong></p>
+                                    <p><strong>{{ English::Test_questions_info_text }}</strong> {{ $test->question_number }}</p>
+                                    <p><strong>{{ English::Test_duration_info_text }}:</strong>
+                                        {{ $test->duration_in_minutes }}
+                                        minutes</p>
+                                </div>
+                            @endforeach
+
+
+                            <a href="{{ route('planification.edit', ['id' => $plan->id]) }}"
+                                class="btn btn-warning">{{ English::Update_text }} {{ English::Planification_text }}</a>
+                            <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#myModal"
+                                data-id="{{ $plan->id }}" data-name="{{ $plan->name }}" data-type="{{ $plan->type }}"
+                                data-description="{{ $plan->description }}">
+                                {{ English::Delete_text }} {{ English::Planification_text }}</a>
                     </div>
-                @endforeach
-            @break
+                @else
+                    <p>{{ English::Test_empty_text }}</p>
+                    <div class="card-footer d-flex justify-content-between">
+                        <a href="{{ route('planification.configurate', ['planification' => $plan->id]) }}"
+                            class="btn btn-primary">{{ English::Configuration_text }} {{ English::Planification_text }}</a>
+                        <a href="{{ route('planification.edit', ['id' => $plan->id]) }}"
+                            class="btn btn-warning">{{ English::Update_text }} {{ English::Planification_text }}</a>
+                        <a href="#" class="btn btn-danger" data-toggle="modal" data-target="#myModal"
+                            data-id="{{ $plan->id }}" data-name="{{ $plan->name }}" data-type="{{ $plan->type }}"
+                            data-description="{{ $plan->description }}">
+                            {{ English::Delete_text }} {{ English::Planification_text }}</a>
+            @endif
+            </div>
+            </div>
+            @endforeach
+        @break
 
-            @default
-                <p>{{ English::Planification_text_default }}</p>
-            @break
+        @case('alumno')
+            @foreach ($planifications as $plan)
+                <div class="card mb-4">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ $plan->name }}</h5>
+                        <p class="card-text">{{ $plan->type }}</p>
+                        <p class="card-text">{{ $plan->description }}</p>
+                        <p class="card-text">
+                            <small class="text-muted">{{ $plan->date }}</small>
+                        </p>
 
-        @endswitch
+                        @if ($plan->hasTest)
+                            @foreach ($plan->bank->tests as $test)
+                                <div>
+                                    <p><strong>{{ English::Test_info_text }}</strong></p>
+                                    <p><strong>{{ English::Test_questions_info_text }}</strong> {{ $test->question_number }}</p>
+                                    <p><strong>{{ English::Test_duration_info_text }}:</strong> {{ $test->duration_in_minutes }}
+                                        minutes</p>
+                                </div>
+                            @endforeach
+
+                    </div>
+                @else
+                    <p>{{ English::Test_empty_text }}</p>
+            @endif
+
+
+            </div>
+            <div class="card-footer d-flex justify-content-between">
+                <a href="#" class="btn btn-warning">{{ English::Take_text }}</a>
+            </div>
+            </div>
+            @endforeach
+        @break
+
+        @default
+            <p>{{ English::Planification_text_default }}</p>
+        @break
+
+    @endswitch
     </div>
 
     {{-- Modal --}}
@@ -126,8 +162,8 @@
                     <p id="planification-details"></p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-danger" id="delete-confirm">Delete</button>
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">{{ English::Cancel_text }}</button>
+                    <button type="button" class="btn btn-danger" id="delete-confirm">{{ English::Delete_text }}</button>
                 </div>
             </div>
         </div>
