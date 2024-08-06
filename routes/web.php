@@ -7,6 +7,7 @@ use App\Http\Controllers\TestController;
 use App\Http\Controllers\BanksController;
 use App\Http\Controllers\CourseUserController;
 use App\Http\Controllers\PlanificationController;
+use App\Http\Controllers\ResponsesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -90,4 +91,16 @@ Route::group(['prefix' => 'admin'], function () {
     Route::get('/edit-test/{test}', [TestController::class, 'edit'])->name('test.edit');
     Route::put('/update-test/{test}', [TestController::class, 'update'])->name('test.update');
     Route::delete('/delete-test/{test}', [TestController::class, 'destroy'])->name('test.delete');
+
+    /**
+     * Responses
+     */
+
+    Route::get('/response/{test}',[ResponsesController::class,'take'])->name('responses.make');
+    Route::get('/tests/{test}/take-questions', [ResponsesController::class, 'takeQuestions'])->name('tests.takeQuestions');
+    Route::post('/store-responses', [ResponsesController::class, 'store'])->name('responses.store');
+    Route::get('/show-responses/{response}', [ResponsesController::class, 'show'])->name('responses.show');
+
+
+
 });

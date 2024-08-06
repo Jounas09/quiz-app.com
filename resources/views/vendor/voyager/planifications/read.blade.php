@@ -131,9 +131,7 @@
                                 $today = \Carbon\Carbon::now()->format('Y/m/d');
 
                                 $planDate = \Carbon\Carbon::parse($plan->date)->format('Y/m/d');
-                                //dd($planDate);
                             @endphp
-
 
                             @if ($today ==$planDate)
                                 @foreach ($plan->bank->tests as $test)
@@ -146,8 +144,14 @@
                                             minutes</p>
                                     </div>
                                 @endforeach
+
                                 <div class="card-footer d-flex justify-content-between">
-                                    <a href="#" class="btn btn-warning">{{ English::Take_text }}</a>
+                                    {{-- <a href="{{ route('responses.make',['test'=>$test->id]) }}" class="btn btn-warning">{{ English::Take_text }}</a> --}}
+                                    @if ($test->userHasResponded)
+                                    <a href="{{ route('responses.show', ['response' => $test->userResponseId]) }}" class="btn btn-success">{{ English::View_text }}</a>
+                                        @else
+                                            <a href="{{ route('responses.make', ['test' => $test->id]) }}" class="btn btn-warning">{{ English::Take_text }}</a>
+                                        @endif
                                 </div>
                             @endif
 
