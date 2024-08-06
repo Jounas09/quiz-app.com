@@ -103,25 +103,26 @@ class PlanificationController extends Controller
     public function details(Course $course)
     {
         $user = Auth::user();
-        //$planifications = PlanificationCourse::where('id_Course', $course->id)->with('planification')->get();
 
         $planifications = Planification::whereHas('courses', function ($query) use ($course) {
-            // Especifica a qué tabla pertenece el id en la subconsulta
             $query->where('courses.id', $course->id);
         })->with('courses')->get();
 
-        // Verificar si el banco de preguntas asociado tiene un test
+        // Verificar si el banco de preguntas asociado tiene un test y si el alumno autenticado ya ha respondido
         foreach ($planifications as $planification) {
-            // Verificar si el banco de preguntas existe
             if ($planification->bank) {
-                // Verificar si el banco de preguntas tiene un test
                 $planification->hasTest = $planification->bank->tests()->exists();
+                if ($planification->hasTest) {
+                    foreach ($planification->bank->tests as $test) {
+                        $userResponse = $test->responses()->where('id_User', $user->id)->first();
+                        $test->userHasResponded = $userResponse !== null;
+                        $test->userResponseId = $userResponse ? $userResponse->id : null;
+                    }
+                }
             } else {
                 $planification->hasTest = false;
             }
         }
-
-        //dd($planifications);
 
         return view('vendor.voyager.planifications.read', compact('planifications', 'course', 'user'));
     }
