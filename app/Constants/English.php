@@ -11,6 +11,7 @@ class English
      */
     const View_text = 'View';
     const Take_text = 'Take';
+    const Take_now_text = 'Take Now';
     const Configuration_text = 'Configurate';
     const Update_text = 'Update';
     const Delete_text = 'Delete';
@@ -21,6 +22,8 @@ class English
     const Show_questions_text = 'Show Questions';
     const Cancel_text = 'Cancel';
     const Delete_modal_title = 'Do you want to delete';
+    const Next_text = 'Next';
+    const Back_text = 'Back';
 
     /**
      * Courses
@@ -74,12 +77,23 @@ class English
      */
     const Number_questions = 'Enter the number of questions';
     const Duration_test = 'Enter the duration of the test';
-    const Total_questions_text = 'Total number of questions of:';
+    const Total_questions_text = 'Total number of questions:';
     const Test_empty_text = 'No associated test found for this bank.';
     const Test_info_text = 'Test Info';
     const Test_questions_info_text = 'Questions number';
     const Test_duration_info_text = 'Duration';
     const Test_duration_mins_text = 'Duration in minutes';
     const Test_configuration_text = 'Configuration';
+
+    /**
+     * Resposnes
+    */
+
+    const Confirmation_title_text = 'Do you really want to take the test';
+    const Confirmation_body_text = 'If you press the OK button, the test will begin.';
+    const Score_text = 'Score';
+    const Response_text = 'Response';
+    const Correct_Response_text = 'Correct response';
+    const User_Response_text = 'User response';
 
 }
