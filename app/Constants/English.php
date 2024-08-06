@@ -24,6 +24,8 @@ class English
     const Delete_modal_title = 'Do you want to delete';
     const Next_text = 'Next';
     const Back_text = 'Back';
+    const Teach_text = 'Teach';
+    const Sign_up_text = 'sign up';
 
     /**
      * Courses
