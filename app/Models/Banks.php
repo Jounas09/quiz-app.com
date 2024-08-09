@@ -22,10 +22,9 @@ class Banks extends Model
         return $this->belongsTo(Planification::class,'id_Planification');
     }
 
-    public function tests()
+    public function course()
     {
-        return $this->hasMany(Test::class, 'id_Bank');
+        return $this->belongsTo(Course::class,'id');
     }
-
 
 }
