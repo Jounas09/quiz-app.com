@@ -101,9 +101,9 @@ class PlanificationController extends Controller
      */
 
     public function details(Course $course)
-    {
-        $user = Auth::user();
-
+{
+    $user = Auth::user();
+    if ($user->role->name == 'alumno') {
         $planifications = Planification::whereHas('courses', function ($query) use ($course) {
             $query->where('courses.id', $course->id);
         })->with('courses')->get();
@@ -123,10 +123,29 @@ class PlanificationController extends Controller
                 $planification->hasTest = false;
             }
         }
+        return view('vendor.voyager.planifications.read', compact('planifications', 'course', 'user'));
+    } else if ($user->role->name == 'admin' || $user->role->name == 'docente') {
+        $planifications = Planification::whereHas('courses', function ($query) use ($course) {
+            $query->where('courses.id', $course->id);
+        })->with(['courses', 'bank.tests.responses'])->get();
 
+        foreach ($planifications as $planification) {
+            if ($planification->bank) {
+                $planification->hasTest = $planification->bank->tests()->exists();
+                if ($planification->hasTest) {
+                    foreach ($planification->bank->tests as $test) {
+                        // Aquí obtenemos todas las respuestas de los alumnos para este test
+                        $responses = $test->responses()->get();
+                        $test->responses = $responses; // Añadimos las respuestas al test para ser utilizadas en la vista
+                    }
+                }
+            } else {
+                $planification->hasTest = false;
+            }
+        }
         return view('vendor.voyager.planifications.read', compact('planifications', 'course', 'user'));
     }
-
+}
 
 
     /**
@@ -215,6 +234,18 @@ class PlanificationController extends Controller
         //($plans);
 
         return response()->json($plans);
+    }
+
+    public function show_scores(Planification $planification)
+    {
+        // Acceder a las respuestas a través de las relaciones
+        $responses = $planification->bank->tests->load('responses.user')->flatMap(function($test) {
+            return $test->responses;
+        });
+
+        // Mostrar las respuestas
+        //dd($responses);
+        return view('vendor.voyager.responses.browse', compact('responses'));
     }
 
 
