@@ -68,6 +68,8 @@ Route::group(['prefix' => 'admin'], function () {
     Route::delete('/delete-planification/{planification}', [PlanificationController::class, 'destroy'])
     ->name('planification.delete');
 
+    Route::get('scores-planification/{planification}',[PlanificationController::class, 'show_scores'])->name('show.scores');
+
     //------------------------------------------------------------------------
 
     /**
