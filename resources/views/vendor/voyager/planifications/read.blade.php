@@ -33,6 +33,11 @@
                                             {{ $test->duration_in_minutes }}
                                             minutes</p>
                                     </div>
+                                    @if ($test->responses)
+                                        <a href="{{ route('show.scores', ['planification' => $plan->id]) }}"
+                                            class="btn btn-primary">{{ English::View_text }} {{ count($test->responses) }}
+                                            {{ English::Responses_text }} </a>
+                                    @endif
                                 @endforeach
                                 <a href="{{ route('test.edit', ['test' => $test->id]) }}"
                                     class="btn btn-primary">{{ English::Update_text }} {{ English::Test_title_text }}</a>
@@ -84,6 +89,11 @@
                                         {{ $test->duration_in_minutes }}
                                         minutes</p>
                                 </div>
+                                @if ($test->responses)
+                                    <a href="{{ route('show.scores', ['planification' => $plan->id]) }}"
+                                        class="btn btn-primary">{{ English::View_text }} {{ count($test->responses) }}
+                                        {{ English::Responses_text }} </a>
+                                @endif
                             @endforeach
                             <a href="{{ route('test.edit', ['test' => $test->id]) }}"
                                 class="btn btn-primary">{{ English::Update_text }} {{ English::Test_title_text }}</a>
@@ -133,33 +143,31 @@
                                 $planDate = \Carbon\Carbon::parse($plan->date)->format('Y/m/d');
                             @endphp
 
-                            @if ($today ==$planDate)
-                                @foreach ($plan->bank->tests as $test)
-                                    <div>
-                                        <p><strong>{{ English::Test_info_text }}</strong></p>
-                                        <p><strong>{{ English::Test_questions_info_text }}</strong> {{ $test->question_number }}
-                                        </p>
-                                        <p><strong>{{ English::Test_duration_info_text }}:</strong>
-                                            {{ $test->duration_in_minutes }}
-                                            minutes</p>
-                                    </div>
-                                @endforeach
-
-                                <div class="card-footer d-flex justify-content-between">
-                                    {{-- <a href="{{ route('responses.make',['test'=>$test->id]) }}" class="btn btn-warning">{{ English::Take_text }}</a> --}}
-                                    @if ($test->userHasResponded)
-                                    <a href="{{ route('responses.show', ['response' => $test->userResponseId]) }}" class="btn btn-success">{{ English::View_text }}</a>
-                                        @else
-                                            <a href="{{ route('responses.make', ['test' => $test->id]) }}" class="btn btn-warning">{{ English::Take_text }}</a>
-                                        @endif
+                            @foreach ($plan->bank->tests as $test)
+                                <div>
+                                    <p><strong>{{ English::Test_info_text }}</strong></p>
+                                    <p><strong>{{ English::Test_questions_info_text }}</strong> {{ $test->question_number }}
+                                    </p>
+                                    <p><strong>{{ English::Test_duration_info_text }}:</strong>
+                                        {{ $test->duration_in_minutes }}
+                                        minutes</p>
                                 </div>
+                            @endforeach
+                            @if ($today == $planDate)
+                                <div class="card-footer d-flex justify-content-between">
+                                    @if (!$test->userHasResponded)
+                                        <a href="{{ route('responses.make', ['test' => $test->id]) }}"
+                                            class="btn btn-warning">{{ English::Take_text }}</a>
+                                    @endif
+                                </div>
+                            @elseif ($test->userHasResponded && $today >= $planDate)
+                                <a href="{{ route('responses.show', ['response' => $test->userResponseId]) }}"
+                                    class="btn btn-success">{{ English::View_text }}</a>
                             @endif
-
                     </div>
                 @else
                     <p>{{ English::Test_empty_text }}</p>
             @endif
-
             </div>
             </div>
             @endforeach
@@ -280,7 +288,8 @@
                         },
                         error: function() {
                             $('#alert').removeClass('alert-success').addClass('alert-danger');
-                            $('#alert').text('{{ English::Planification_delete_modal_error }}')
+                            $('#alert').text(
+                                    '{{ English::Planification_delete_modal_error }}')
                                 .show();
                             $('#myModal').modal('hide');
                         }
