@@ -15,9 +15,27 @@ class Course extends Model
         'name',
         'description'
     ];
-    
-    public function courseUsers()
+
+
+    public function banks()
     {
-        return $this->hasMany(CourseUser::class, 'id_Course');
+        return $this->hasMany(Banks::class);
     }
+
+
+public function coursesUser()
+    {
+        return $this->belongsToMany(CourseUser::class, 'course_user', 'id_Course', 'id_Planification');
+    }
+
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'course_user', 'id_Course', 'id_User');
+    }
+
+    public function planifications()
+    {
+        return $this->belongsToMany(Planification::class, 'planification_courses', 'id_Course', 'id_Planification');
+    }
+
 }
