@@ -108,6 +108,12 @@ class English
     // const Correct_Response_text = 'Correct response';
     // const User_Response_text = 'User response';
 
+//     /**
+//  * Usuarios
+//  */
+
+//  const User_title_text ='User';
+
 
  /**
      * --------------------------------------------------------
@@ -202,8 +208,15 @@ const Confirmation_title_text = '¿Realmente deseas tomar la prueba?';
 const Confirmation_body_text = 'Si presionas el botón OK, la prueba comenzará.';
 const Score_text = 'Puntuación';
 const Response_text = 'Respuesta';
+const Responses_text = 'Respuestas';
 const Correct_Response_text = 'Respuesta correcta';
 const User_Response_text = 'Respuesta del usuario';
+
+/**
+ * Usuarios
+ */
+
+ const User_title_text ='Usuario';
 
 
 }
