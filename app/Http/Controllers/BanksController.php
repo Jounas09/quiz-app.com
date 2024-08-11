@@ -46,13 +46,7 @@ class BanksController extends Controller
 
         $courses = Course::all();
         //dd($courses);
-
-
-        $plans = Planification::where('type', '=', Planification::TYPE_TEST)
-        ->whereDoesntHave('bank')
-        ->get();
-
-        //dd($plans);
+        $plans = Planification::where('type', '=', 'Test')->get();
         return view('vendor.voyager.banks.add', compact('plans', 'courses'));
 
         }else{
@@ -63,13 +57,7 @@ class BanksController extends Controller
             return $courseUser->course;
         });
         //dd($courses);
-
-
-        $plans = Planification::where('type', '=', Planification::TYPE_TEST)
-        ->whereDoesntHave('bank')
-        ->get();
-        //dd($plans);
-
+        $plans = Planification::where('type', '=', 'Test')->get();
         return view('vendor.voyager.banks.add', compact('plans', 'courses'));
 
 
