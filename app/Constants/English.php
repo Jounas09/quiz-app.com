@@ -19,12 +19,15 @@ class English
     const Select_text = 'Select an option';
     const Actions_text = 'Actions';
     const Show_questions_text = 'Show Questions';
+    const Cancel_text = 'Cancel';
+    const Delete_modal_title = 'Do you want to delete';
 
     /**
      * Courses
      */
 
      const Course_text = 'Course';
+     const Courses_text = 'Courses';
 
     /**
      * Planifications
@@ -66,5 +69,17 @@ class English
     const Task_title_text = 'Task';
     const Class_title_text = 'Class';
 
+    /**
+     * Tests
+     */
+    const Number_questions = 'Enter the number of questions';
+    const Duration_test = 'Enter the duration of the test';
+    const Total_questions_text = 'Total number of questions of:';
+    const Test_empty_text = 'No associated test found for this bank.';
+    const Test_info_text = 'Test Info';
+    const Test_questions_info_text = 'Questions number';
+    const Test_duration_info_text = 'Duration';
+    const Test_duration_mins_text = 'Duration in minutes';
+    const Test_configuration_text = 'Configuration';
 
 }
